@@ -174,3 +174,9 @@ html, body, #root {
 .nav-arrow:hover {
   color: #ccc;
 }
+
+@media (max-width: 768px) {
+  .hero {
+    background-attachment: scroll;
+  }
+}
