@@ -8,6 +8,20 @@ import 'aos/dist/aos.css';
 
 
 function App() {
+  {/* VAR CHANGES */}
+  const [cmsData, setCmsData] = useState(null);
+
+  useEffect(() => {
+    const fetchCMS = async () => {
+      const res = await fetch('https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLg-_JkbgoLnA3KJ9Hy4hKzpKeHAUSn7OEQMvl2PMyLHpYpwoeyap7zgHIVHYBKslDbrOyyL-I1FBMnnxjYzrUqlFCVSL9GCc7iKPpZzaMmZQEcbXS1TdWUzX_xS5Fxr0pYsHoCwEt0sdmDVphmSLH5758wGVdr95K1O4LE511AJJFvZdkiiLlt6gXq6oARrrVtqRXD0konRTkYD4UeyDgJ9w2ZP4_5nDGxNFaffVBSe7qkbLS9zH3KGARaUEospBa91Dh4x-gRBv-33n9yK-Ihh1UFSsevJHK2ukHqn&lib=MIjo5o6EZm4mxgifi7zhMehIWV7Ta3rLV');
+      const data = await res.json();
+      console.log("CMS Data:", data);
+      setCmsData(data);
+    };
+
+    fetchCMS();
+  }, []);
+  
 
   useEffect(() => {
     const header = document.querySelector(".scroll-header");
@@ -26,21 +40,15 @@ function App() {
 
   useEffect(() => {
     AOS.init({
-      duration: 1500, // animation duration in ms
-      once: true,    // animate only once on scroll
+      duration: 1500, 
+      once: true,  
     });
   }, []);
 
   const [selectedIndex, setSelectedIndex] = useState(null);
 
-  const imageUrls = [
-    "https://i.pinimg.com/736x/1e/4a/54/1e4a547d834f1b5a3a8555229ec9649c.jpg",
-    "https://i.pinimg.com/736x/55/be/50/55be50421b2d121af9d83e10f01db5c2.jpg",
-    "https://i.pinimg.com/736x/c1/10/d1/c110d14dae9f9d380e0ad6540f07264f.jpg",
-    "https://i.pinimg.com/736x/ab/12/63/ab12633894e50a82cd8c18982b624530.jpg",
-    "https://i.pinimg.com/736x/3b/e1/76/3be17636eea2e89de4e8d06d854eb611.jpg",
-    // etc.
-  ];
+  const imageUrls = cmsData?.images || [];
+
   const currentImage = selectedIndex !== null ? imageUrls[selectedIndex] : null;
   const [isFadingOut, setIsFadingOut] = useState(false);
 
@@ -72,7 +80,7 @@ function App() {
       </header>
       <div className="hero"> 
         <h1>Tam Nguyen</h1> {/* change */}
-        <p>Painter & Lover of Sweets</p> {/* customizable */}
+        <p>Painter and Lover of Sweets</p> {/* customizable */}
         <nav className="nav-links">
             <a href="mailto:mang.illust@gmail.com"><CiMail /></a>
             <a href="https://www.instagram.com/mangcuts/" target="blank"><CiInstagram /></a>
@@ -83,20 +91,19 @@ function App() {
                 columnsCountBreakPoints={{350: 1, 750: 2, 900: 3, 1200: 4, 1500: 5, }}
         >
           <Masonry>
-            {imageUrls.map((url, index) => (
+          {imageUrls.map((url, index) => (
+            <div key={index} className="gallery-item" data-aos="fade-up" data-aos-delay={index * 300}>
               <img
-                key={index}
                 src={url}
                 alt={`Artwork ${index}`}
                 className="gallery-img"
-                data-aos="fade-up"
-                data-aos-delay={index * 300}
                 onClick={() => {
                   setIsFadingOut(false); 
-                  setSelectedIndex(index);
+                  setSelectedIndex(imageUrls.length - 1 - index);
                 }}
               />
-            ))}
+            </div>
+          ))}
           </Masonry>
         </ResponsiveMasonry>
       </div>
