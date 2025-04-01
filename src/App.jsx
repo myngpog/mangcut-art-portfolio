@@ -13,7 +13,7 @@ function App() {
 
   useEffect(() => {
     const fetchCMS = async () => {
-      const res = await fetch('https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLg-_JkbgoLnA3KJ9Hy4hKzpKeHAUSn7OEQMvl2PMyLHpYpwoeyap7zgHIVHYBKslDbrOyyL-I1FBMnnxjYzrUqlFCVSL9GCc7iKPpZzaMmZQEcbXS1TdWUzX_xS5Fxr0pYsHoCwEt0sdmDVphmSLH5758wGVdr95K1O4LE511AJJFvZdkiiLlt6gXq6oARrrVtqRXD0konRTkYD4UeyDgJ9w2ZP4_5nDGxNFaffVBSe7qkbLS9zH3KGARaUEospBa91Dh4x-gRBv-33n9yK-Ihh1UFSsevJHK2ukHqn&lib=MIjo5o6EZm4mxgifi7zhMehIWV7Ta3rLV');
+      const res = await fetch(import.meta.env.VITE_CMS_URL);
       const data = await res.json();
       console.log("CMS Data:", data);
       setCmsData(data);
