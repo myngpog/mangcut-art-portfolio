@@ -31,7 +31,7 @@ html, body, #root {
 }
 
 .hero {
-  background-image: url('https://i.pinimg.com/736x/93/14/41/931441b1fbe0e0921af0e538d6325a74.jpg'); /*Customizable*/
+  background-image: url('https://i.imgur.com/EYf9OAI.png'); /*Customizable*/
   background-color: rgba(0, 0, 0, 0.5); /*Customizable*/
   background-blend-mode: darken;
   background-position: center center;

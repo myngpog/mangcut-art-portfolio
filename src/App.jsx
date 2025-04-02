@@ -47,7 +47,7 @@ function App() {
 
   const [selectedIndex, setSelectedIndex] = useState(null);
 
-  const imageUrls = cmsData?.images || [];
+  const imageUrls = [...(cmsData?.images || [])].reverse();
 
   const currentImage = selectedIndex !== null ? imageUrls[selectedIndex] : null;
   const [isFadingOut, setIsFadingOut] = useState(false);
@@ -99,7 +99,7 @@ function App() {
                 className="gallery-img"
                 onClick={() => {
                   setIsFadingOut(false); 
-                  setSelectedIndex(imageUrls.length - 1 - index);
+                  setSelectedIndex(index);
                 }}
               />
             </div>
