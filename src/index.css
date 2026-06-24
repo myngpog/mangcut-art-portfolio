@@ -33,7 +33,7 @@ html, body, #root {
 .hero {
   /* remove background-image / attachment from here */
   background: none;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.5);
   color: white;
 
   display: flex;
