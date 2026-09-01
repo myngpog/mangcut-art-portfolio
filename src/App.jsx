@@ -7,6 +7,12 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 
+// Google Drive "view" share links can't be hotlinked directly; convert to a direct image URL
+const toDirectImageUrl = (url) => {
+  const driveMatch = url.match(/drive\.google\.com\/file\/d\/([^/]+)/);
+  return driveMatch ? `https://lh3.googleusercontent.com/d/${driveMatch[1]}` : url;
+};
+
 function App() {
   {/* VAR CHANGES */}
   const [cmsData, setCmsData] = useState(null);
@@ -14,7 +20,16 @@ function App() {
   useEffect(() => {
     const fetchCMS = async () => {
       const res = await fetch(import.meta.env.VITE_CMS_URL);
-      const data = await res.json();
+      const text = await res.text();
+      // gviz/tq responses are wrapped as google.visualization.Query.setResponse({...});
+      const prefix = 'google.visualization.Query.setResponse(';
+      const jsonText = text.slice(text.indexOf(prefix) + prefix.length, text.lastIndexOf(');'));
+      const json = JSON.parse(jsonText);
+      const images = json.table.rows
+        .map((row) => row.c[0]?.v)
+        .filter(Boolean)
+        .map(toDirectImageUrl);
+      const data = { images };
       console.log("CMS Data:", data);
       setCmsData(data);
     };
